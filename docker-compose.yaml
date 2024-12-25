@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Servidor PHP para Laravel
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: challenge
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "8000:9000"
+    networks:
+      - app-network
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=challenge
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  # Base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: challenge
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - .:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
