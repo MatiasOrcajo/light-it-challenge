@@ -1,6 +1,6 @@
 1. Clone this repo
 2. Set MAIL_USERNAME and MAIL_PASSWORD in .env with keys given by Mailtrap
-3. Run docker compose up --build -d to running the project's container
+3. Run docker compose up --build -d to running the project's containers
 4. In console, at the project path, run docker exec -it challenge sh to enter container console
 5. Run composer install
 6. Run php artisan migrate
