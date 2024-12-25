@@ -12,4 +12,4 @@
     - phone
     - document_photo (.jpg, .png)
   
-9. Additionaly, you can run php artisan test to assert the application is working
+9. Additionaly, you can run php artisan test to ensure that the application is working fine
